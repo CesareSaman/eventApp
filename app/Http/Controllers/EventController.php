@@ -8,6 +8,7 @@ use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redis;
 
 
 class EventController extends Controller
@@ -68,8 +69,11 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $redis_event_views = Redis::get('event:id:'.$event->event_id);
+        $event_views = (isset($redis_event_views))?(int)$redis_event_views+1:1;
+        Redis::set('event:id:'.$event->event_id,$event_views);
         $current_user = $this->getUser();
-        return view('event.show',compact('event','current_user'));
+        return view('event.show',compact('event','current_user','event_views'));
     }
 
     /**

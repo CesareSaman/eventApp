@@ -42,6 +42,9 @@
                             {{ $event->event_description }}
                         </div>
                     </div>
+                    <div class="card-footer">
+                        Views: {{ $event_views }}
+                    </div>
                 </div>
             </div>
         </div>

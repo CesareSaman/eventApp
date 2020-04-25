@@ -5,6 +5,7 @@
 
 <ul>
 <li>Command for cron jobs</li>
+<li>Redis for Event Views</li>
 <li>Request</li>
 <li>Middleware
 <ul>
