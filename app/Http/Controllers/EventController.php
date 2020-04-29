@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventRequest;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\User;
+use App\Notifications\EventCreatedNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -56,6 +58,8 @@ class EventController extends Controller
             if(is_array($categories) && count($categories)>0){
                 $event->categories()->attach($categories);
             }
+
+            User::where('role','=','admin')->firstOrFail()->notify(new EventCreatedNotification());
         }
 
         return redirect('/event')->with('status','Event Created Successfully');

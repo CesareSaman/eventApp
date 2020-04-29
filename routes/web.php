@@ -19,3 +19,8 @@ Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 Route::resource('event', 'EventController');
 
 Auth::routes(['verify' => true]);
+
+Route::get('/notif', function (){
+    \App\Models\User::find(22)->notify(new \App\Notifications\EventCreatedNotification());
+    return 'Done';
+});
